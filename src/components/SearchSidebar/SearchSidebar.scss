@@ -1,0 +1,14 @@
+@import '../../styles//StyleVariables.scss';
+
+.SearchSidebarContainer {
+    position: fixed;
+    height: 100%;
+    width: 250px;
+    z-index: 500;
+    padding: $bigPaddingAmount;
+}
+
+.SearchSidebarBar {
+    background: white;
+    height: calc(100% - #{2 * $bigPaddingAmount});
+}
