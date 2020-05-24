@@ -1,20 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { PizzaMap, SearchSidebar } from './components';
 
 import './App.scss';
 
 const App = () => {
-    const [mapBounds, setBounds] = useState({ south: null, north: null, east: null, west: null });
-
     const [pizzaLocations, setPizzaLocations] = useState([]);
     const [selectedLocation, setSelectedLocation] = useState(null);
-
-    useEffect(() => {
-        console.log('updating query');
-        setSelectedLocation(null);
-        // CALL GMAPS API
-        // SET PIZZA LOCATIONS
-    }, [mapBounds]);
 
     return (
         <div className="App">
@@ -23,7 +14,7 @@ const App = () => {
                 <PizzaMap
                     pizzaLocations={pizzaLocations}
                     setSelectedLocation={setSelectedLocation}
-                    setBounds={setBounds}
+                    setPizzaLocations={setPizzaLocations}
                 />
             </div>
         </div>

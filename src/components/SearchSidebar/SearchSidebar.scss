@@ -11,4 +11,5 @@
 .SearchSidebarBar {
     background: white;
     height: calc(100% - #{2 * $bigPaddingAmount});
+    overflow: scroll;
 }

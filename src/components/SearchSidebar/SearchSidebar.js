@@ -2,10 +2,22 @@ import React from 'react';
 
 import './SearchSidebar.scss';
 
-const SearchSidebar = () => (
-    <div className="SearchSidebarContainer">
-        <div className="SearchSidebarBar">SEARCH SIDEBAR</div>
-    </div>
-);
+const PizzaPlace = (props) => {
+    const { name } = props;
+    return <div>{name}</div>;
+};
+
+const SearchSidebar = (props) => {
+    const { pizzaLocations } = props;
+    return (
+        <div className="SearchSidebarContainer">
+            <div className="SearchSidebarBar">
+                {pizzaLocations.map((location) => (
+                    <PizzaPlace key={location.id} {...location} />
+                ))}
+            </div>
+        </div>
+    );
+};
 
 export default SearchSidebar;
