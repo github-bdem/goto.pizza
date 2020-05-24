@@ -1,23 +1,16 @@
 import React, { useState } from 'react';
-import { Map, TileLayer, Marker, Popup, ZoomControl } from 'react-leaflet';
+import GoogleMapReact from 'google-map-react';
 
 const PizzaMap = () => {
-    const [position] = useState([51.505, -0.09]);
-    const [zoom] = useState(13);
+    const [center, setCenter] = useState({ lat: 59.95, lng: 30.33 });
+    const [zoom, setZoom] = useState(11);
 
     return (
-        <Map center={position} zoom={zoom} style={{ height: '100%' }} zoomControl={false}>
-            <TileLayer
-                attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <Marker position={position}>
-                <Popup>
-                    A pretty CSS3 popup. <br /> Easily customizable.
-                </Popup>
-            </Marker>
-            <ZoomControl position={'bottomright'} />
-        </Map>
+        <GoogleMapReact
+            bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY }}
+            defaultCenter={center}
+            defaultZoom={zoom}
+        />
     );
 };
 
