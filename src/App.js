@@ -4,23 +4,27 @@ import { PizzaMap, SearchSidebar } from './components';
 import './App.scss';
 
 const App = () => {
-    const [mapCenter, setMapCenter] = useState({ lat: -0.09, lng: 51.505 });
+    const [mapBounds, setBounds] = useState({ south: null, north: null, east: null, west: null });
+
     const [pizzaLocations, setPizzaLocations] = useState([]);
     const [selectedLocation, setSelectedLocation] = useState(null);
 
-    console.log(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
-
     useEffect(() => {
-        // CLEAR SELECTED LOCATION
+        console.log('updating query');
+        setSelectedLocation(null);
         // CALL GMAPS API
         // SET PIZZA LOCATIONS
-    }, [mapCenter]);
+    }, [mapBounds]);
 
     return (
         <div className="App">
             <div className="MainMapContainer">
                 <SearchSidebar pizzaLocations={pizzaLocations} selectedLocation={selectedLocation} />
-                <PizzaMap pizzaLocations={pizzaLocations} setSelectedLocation={setSelectedLocation} />
+                <PizzaMap
+                    pizzaLocations={pizzaLocations}
+                    setSelectedLocation={setSelectedLocation}
+                    setBounds={setBounds}
+                />
             </div>
         </div>
     );
