@@ -8,6 +8,8 @@ const App = () => {
     const [pizzaLocations, setPizzaLocations] = useState([]);
     const [selectedLocation, setSelectedLocation] = useState(null);
 
+    console.log(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
+
     useEffect(() => {
         // CLEAR SELECTED LOCATION
         // CALL GMAPS API
