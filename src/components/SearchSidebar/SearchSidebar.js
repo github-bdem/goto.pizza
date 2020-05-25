@@ -9,6 +9,7 @@ const PizzaPlace = (props) => {
 
 const SearchSidebar = (props) => {
     const { pizzaLocations } = props;
+    console.log(JSON.stringify(pizzaLocations));
     return (
         <div className="SearchSidebarContainer">
             <div className="SearchSidebarBar">
