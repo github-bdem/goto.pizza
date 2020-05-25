@@ -1,0 +1,9 @@
+@import '../../styles/StyleVariables.scss';
+
+.MapLoading {
+    background-color: $background-grey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}

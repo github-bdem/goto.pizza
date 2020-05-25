@@ -1,15 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import GoogleMapReact from 'google-map-react';
+
+import './PizzaMap.scss';
 
 const PizzaMap = (props) => {
     const { setPizzaLocations } = props;
 
     const [currentRequestCenter, setCurrentRequestCenter] = useState({ lat: 33.8108, lng: -117.923 });
+    const [initialMapCenter, setInitialMapCenter] = useState({ lat: 33.8108, lng: -117.923 });
     const [lastUpdatedZoom, setLastUpdatedZoom] = useState(15);
+    const [initialLoading, setInitialLoading] = useState(true);
 
     const [googleMapsSearchService, setGoogleMapsSearchService] = useState(null);
     const minmumCenterDeltaToTriggerUpdate = 1; // Delta is expressed in km
     const minimumZoomLevelDeltaToTriggerUpdate = 2;
+
+    useEffect(() => {
+        const geolocationOptions = {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0,
+        };
+        const successFunction = (pos) => {
+            console.log(pos);
+            const position = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+            setInitialMapCenter(position);
+            setCurrentRequestCenter(position);
+            setInitialLoading(false);
+        };
+        navigator.geolocation.getCurrentPosition(successFunction, () => setInitialLoading(false), geolocationOptions);
+    }, []);
 
     const convertDegreesToRadians = (deg) => {
         return deg * (Math.PI / 180);
@@ -89,17 +109,23 @@ const PizzaMap = (props) => {
     };
 
     return (
-        <GoogleMapReact
-            bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY, libraries: 'places' }}
-            defaultCenter={{ lat: 33.8108, lng: -117.923 }}
-            defaultZoom={15}
-            onChange={handleBoundsChange}
-            yesIWantToUseGoogleMapApiInternals
-            onGoogleApiLoaded={({ map }) => {
-                // eslint-disable-next-line no-undef
-                const service = new google.maps.places.PlacesService(map);
-                fetchNewPizzaLocations({ placesSearchService: service, center: map.center, zoom: map.zoom });
-            }}></GoogleMapReact>
+        <>
+            {!initialLoading && (
+                <GoogleMapReact
+                    bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY, libraries: 'places' }}
+                    defaultCenter={initialMapCenter}
+                    defaultZoom={15}
+                    onChange={handleBoundsChange}
+                    yesIWantToUseGoogleMapApiInternals
+                    onGoogleApiLoaded={({ map }) => {
+                        // eslint-disable-next-line no-undef
+                        const service = new google.maps.places.PlacesService(map);
+                        fetchNewPizzaLocations({ placesSearchService: service, center: map.center, zoom: map.zoom });
+                    }}
+                />
+            )}
+            {initialLoading && <div className="MapLoading">Loading Pizza Map</div>}
+        </>
     );
 };
 
