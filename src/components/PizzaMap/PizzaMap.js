@@ -1,16 +1,105 @@
 import React, { useState } from 'react';
 import GoogleMapReact from 'google-map-react';
 
-const PizzaMap = () => {
-    const [center, setCenter] = useState({ lat: 59.95, lng: 30.33 });
-    const [zoom, setZoom] = useState(11);
+const PizzaMap = (props) => {
+    const { setPizzaLocations } = props;
+
+    const [currentRequestCenter, setCurrentRequestCenter] = useState({ lat: 33.8108, lng: -117.923 });
+    const [lastUpdatedZoom, setLastUpdatedZoom] = useState(15);
+
+    const [googleMapsSearchService, setGoogleMapsSearchService] = useState(null);
+    const minmumCenterDeltaToTriggerUpdate = 1; // Delta is expressed in km
+    const minimumZoomLevelDeltaToTriggerUpdate = 2;
+
+    const convertDegreesToRadians = (deg) => {
+        return deg * (Math.PI / 180);
+    };
+
+    const shouldFetchNewPizzaLocations = ({ newCenter, newZoom }) => {
+        /*  Checks to see if the center has moved enough or if the zoom level has changed enough from the last
+            pizza locations request.  Distance calcualtion done via Haversine formula.
+        */
+        const lat1 = currentRequestCenter.lat;
+        const lng1 = currentRequestCenter.lng;
+
+        const lat2 = newCenter.lat;
+        const lng2 = newCenter.lng;
+
+        const radiusOfEarth = 6371;
+        const latitudinalDistance = convertDegreesToRadians(lat2 - lat1);
+        const longitudinalDistance = convertDegreesToRadians(lng2 - lng1);
+        const a =
+            Math.sin(latitudinalDistance / 2) * Math.sin(latitudinalDistance / 2) +
+            Math.cos(convertDegreesToRadians(lat1)) *
+                Math.cos(convertDegreesToRadians(lat2)) *
+                Math.sin(longitudinalDistance / 2) *
+                Math.sin(longitudinalDistance / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const centerDeltaTrigger = radiusOfEarth * c >= minmumCenterDeltaToTriggerUpdate;
+
+        const zoomDeltaTrigger = Math.abs(newZoom - lastUpdatedZoom) >= minimumZoomLevelDeltaToTriggerUpdate;
+
+        return centerDeltaTrigger || zoomDeltaTrigger;
+    };
+
+    const handleBoundsChange = (args) => {
+        const { center, zoom } = args;
+        if (shouldFetchNewPizzaLocations({ newCenter: center, newZoom: zoom })) {
+            fetchNewPizzaLocations({ center, zoom });
+        }
+    };
+
+    const handleNewPizzaLocationsResponse = (results, status) => {
+        // eslint-disable-next-line no-undef
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+            setPizzaLocations(results);
+        } else {
+            setPizzaLocations([]);
+        }
+    };
+
+    const fetchNewPizzaLocations = ({ placesSearchService, center, zoom }) => {
+        const searchRadius = 1500;
+
+        if (!!placesSearchService) {
+            let request = {
+                keyword: 'pizza',
+                location: center,
+                radius: searchRadius,
+                type: ['restaurant'],
+            };
+            placesSearchService.nearbySearch(request, handleNewPizzaLocationsResponse);
+            setGoogleMapsSearchService(placesSearchService);
+            setLastUpdatedZoom(zoom);
+            setCurrentRequestCenter({ lat: center.lat(), lng: center.lng() });
+        } else if (googleMapsSearchService) {
+            let request = {
+                keyword: 'pizza',
+                // eslint-disable-next-line no-undef
+                location: new google.maps.LatLng(center.lat, center.lng),
+                radius: searchRadius,
+                type: ['restaurant'],
+            };
+            googleMapsSearchService.nearbySearch(request, handleNewPizzaLocationsResponse);
+            setLastUpdatedZoom(zoom);
+            setCurrentRequestCenter(center);
+        } else {
+            console.error('Error in Pizza Map when trying to fetch new pizza locations');
+        }
+    };
 
     return (
         <GoogleMapReact
-            bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY }}
-            defaultCenter={center}
-            defaultZoom={zoom}
-        />
+            bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY, libraries: 'places' }}
+            defaultCenter={{ lat: 33.8108, lng: -117.923 }}
+            defaultZoom={15}
+            onChange={handleBoundsChange}
+            yesIWantToUseGoogleMapApiInternals
+            onGoogleApiLoaded={({ map }) => {
+                // eslint-disable-next-line no-undef
+                const service = new google.maps.places.PlacesService(map);
+                fetchNewPizzaLocations({ placesSearchService: service, center: map.center, zoom: map.zoom });
+            }}></GoogleMapReact>
     );
 };
 
