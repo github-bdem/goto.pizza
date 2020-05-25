@@ -3,7 +3,7 @@
 .SearchSidebarContainer {
     position: fixed;
     height: 100%;
-    width: 250px;
+    width: 350px;
     z-index: 500;
     padding: $bigPaddingAmount;
 }
@@ -11,5 +11,34 @@
 .SearchSidebarBar {
     background: white;
     height: calc(100% - #{2 * $bigPaddingAmount});
-    overflow: scroll;
+}
+
+.PizzaLocationsContainer {
+    overflow-y: scroll;
+    height: calc(100% - #{$sidebarHeaderHeight});
+}
+
+.SidebarHeader {
+    height: $sidebarHeaderHeight;
+    border-bottom: 1px solid $background-grey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: bold;
+    background-color: $pizzaOrange;
+}
+
+.PizzaPlaceCard {
+    border: 1px solid $background-grey;
+    padding: $normalPaddingAmount;
+}
+
+.PizzaPlaceCardWrapper {
+    margin: $normalPaddingAmount;
+}
+
+.LoadMoreInfoButton {
+    cursor: pointer;
+    margin-top: 4px;
 }

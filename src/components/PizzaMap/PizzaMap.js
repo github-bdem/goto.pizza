@@ -4,14 +4,13 @@ import GoogleMapReact from 'google-map-react';
 import './PizzaMap.scss';
 
 const PizzaMap = (props) => {
-    const { setPizzaLocations } = props;
+    const { setPizzaLocations, googleMapsSearchService, setGoogleMapsSearchService } = props;
 
     const [currentRequestCenter, setCurrentRequestCenter] = useState({ lat: 33.8108, lng: -117.923 });
     const [initialMapCenter, setInitialMapCenter] = useState({ lat: 33.8108, lng: -117.923 });
     const [lastUpdatedZoom, setLastUpdatedZoom] = useState(15);
     const [initialLoading, setInitialLoading] = useState(true);
 
-    const [googleMapsSearchService, setGoogleMapsSearchService] = useState(null);
     const minmumCenterDeltaToTriggerUpdate = 1; // Delta is expressed in km
     const minimumZoomLevelDeltaToTriggerUpdate = 2;
 
