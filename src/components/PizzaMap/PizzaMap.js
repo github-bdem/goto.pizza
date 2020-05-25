@@ -7,15 +7,19 @@ import './PizzaMap.scss';
 // import pizzaLocations from '../../mockLocations';
 
 const PizzaMap = (props) => {
-    const { setPizzaLocations, setSelectedLocation } = props;
-
+    const {
+        setPizzaLocations,
+        googleMapsSearchService,
+        setGoogleMapsSearchService,
+        setSelectedLocation,
+        pizzaLocations,
+    } = props;
 
     const [currentRequestCenter, setCurrentRequestCenter] = useState({ lat: 33.8108, lng: -117.923 });
     const [initialMapCenter, setInitialMapCenter] = useState({ lat: 33.8108, lng: -117.923 });
     const [lastUpdatedZoom, setLastUpdatedZoom] = useState(15);
     const [initialLoading, setInitialLoading] = useState(true);
 
-    const [googleMapsSearchService, setGoogleMapsSearchService] = useState(null);
     const minmumCenterDeltaToTriggerUpdate = 1; // Delta is expressed in km
     const minimumZoomLevelDeltaToTriggerUpdate = 2;
 
@@ -112,8 +116,6 @@ const PizzaMap = (props) => {
         }
     };
 
-
-
     return (
         <>
             {!initialLoading && (
@@ -127,12 +129,18 @@ const PizzaMap = (props) => {
                         // eslint-disable-next-line no-undef
                         const service = new google.maps.places.PlacesService(map);
                         fetchNewPizzaLocations({ placesSearchService: service, center: map.center, zoom: map.zoom });
-                    }}
-                >
-                {pizzaLocations.map((location) => (
-                    <ShopMarker key={location.id} setSelectedLocation={setSelectedLocation} lat={location.geometry.location.lat} lng={location.geometry.location.lng} text={location.name} location={location} />
-                ))}
-              </GoogleMapReact>
+                    }}>
+                    {pizzaLocations.map((location) => (
+                        <ShopMarker
+                            key={location.id}
+                            setSelectedLocation={setSelectedLocation}
+                            lat={location.geometry.location.lat}
+                            lng={location.geometry.location.lng}
+                            text={location.name}
+                            location={location}
+                        />
+                    ))}
+                </GoogleMapReact>
             )}
             {initialLoading && <div className="MapLoading">Loading Pizza Map</div>}
         </>

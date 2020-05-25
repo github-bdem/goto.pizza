@@ -8,3 +8,19 @@
     height: 100%;
     width: 100%;
 }
+
+.FlexRow {
+    display: flex;
+    flex-direction: row;
+}
+
+.FlexBetween {
+    display: flex;
+    justify-content: space-between;
+}
+
+.FlexCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
