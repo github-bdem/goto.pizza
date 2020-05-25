@@ -3,7 +3,8 @@ import GoogleMapReact from 'google-map-react';
 import ShopMarker from './ShopMarker';
 
 import './PizzaMap.scss';
-import pizzaLocations from '../../mockLocations';
+// uncomment line below when testing to limit unnecessary calls
+// import pizzaLocations from '../../mockLocations';
 
 const PizzaMap = (props) => {
     const { setPizzaLocations, setSelectedLocation } = props;
