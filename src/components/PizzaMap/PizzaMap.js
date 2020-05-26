@@ -3,8 +3,6 @@ import GoogleMapReact from 'google-map-react';
 import ShopMarker from './ShopMarker';
 
 import './PizzaMap.scss';
-// uncomment line below when testing to limit unnecessary calls
-// import pizzaLocations from '../../mockLocations';
 
 const PizzaMap = (props) => {
     const {
@@ -125,6 +123,9 @@ const PizzaMap = (props) => {
                     defaultZoom={15}
                     onChange={handleBoundsChange}
                     yesIWantToUseGoogleMapApiInternals
+                    distanceToMouse={
+                        () => null /* patch from: https://github.com/google-map-react/google-map-react/issues/843 */
+                    }
                     onGoogleApiLoaded={({ map }) => {
                         // eslint-disable-next-line no-undef
                         const service = new google.maps.places.PlacesService(map);
