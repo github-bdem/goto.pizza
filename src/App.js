@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PizzaMap, SearchSidebar } from './components';
+import { PizzaMap, SearchSidebar, GithubLink } from './components';
 
 import './App.scss';
 
@@ -12,6 +12,7 @@ const App = () => {
 
     return (
         <div className="App">
+            <GithubLink />
             <div className="MainMapContainer">
                 <SearchSidebar
                     pizzaLocations={pizzaLocations}
