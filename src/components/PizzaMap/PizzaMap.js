@@ -28,7 +28,6 @@ const PizzaMap = (props) => {
             maximumAge: 0,
         };
         const successFunction = (pos) => {
-            console.log(pos);
             const position = { lat: pos.coords.latitude, lng: pos.coords.longitude };
             setInitialMapCenter(position);
             setCurrentRequestCenter(position);
@@ -133,8 +132,8 @@ const PizzaMap = (props) => {
                         <ShopMarker
                             key={location.id}
                             setSelectedLocation={setSelectedLocation}
-                            lat={location.geometry.location.lat}
-                            lng={location.geometry.location.lng}
+                            lat={location.geometry.location.lat()}
+                            lng={location.geometry.location.lng()}
                             text={location.name}
                             location={location}
                         />
