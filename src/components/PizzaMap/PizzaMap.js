@@ -123,6 +123,7 @@ const PizzaMap = (props) => {
                     defaultZoom={15}
                     onChange={handleBoundsChange}
                     yesIWantToUseGoogleMapApiInternals
+                    options={{ clickableIcons: false }}
                     distanceToMouse={
                         () => null /* patch from: https://github.com/google-map-react/google-map-react/issues/843 */
                     }
