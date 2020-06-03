@@ -124,9 +124,6 @@ const PizzaMap = (props) => {
                     onChange={handleBoundsChange}
                     yesIWantToUseGoogleMapApiInternals
                     options={{ clickableIcons: false }}
-                    distanceToMouse={
-                        () => null /* patch from: https://github.com/google-map-react/google-map-react/issues/843 */
-                    }
                     onGoogleApiLoaded={({ map }) => {
                         // eslint-disable-next-line no-undef
                         const service = new google.maps.places.PlacesService(map);
