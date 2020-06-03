@@ -4,7 +4,14 @@ import PizzaPlaceCard from './PizzaPlaceCard';
 import './SearchSidebar.scss';
 
 const SearchSidebar = (props) => {
-    const { googleMapsSearchService, selectedLocation, pizzaLocations } = props;
+    const {
+        googleMapsSearchService,
+        selectedLocation,
+        pizzaLocations,
+        markerHoveredLocation,
+        setMarkerHoveredLocation,
+        setSidebarHovered,
+    } = props;
     const noPizzaLocations = pizzaLocations.length === 0;
     return (
         <div className="SearchSidebarContainer">
@@ -13,11 +20,13 @@ const SearchSidebar = (props) => {
                 <div className={`PizzaLocationsContainer ${noPizzaLocations ? 'FlexCenter' : ''}`}>
                     {!noPizzaLocations &&
                         pizzaLocations.map((location) => (
-                            <div className="PizzaPlaceCardWrapper">
+                            <div className="PizzaPlaceCardWrapper" key={location.id}>
                                 <PizzaPlaceCard
-                                    key={location.id}
                                     selectedLocation={selectedLocation}
+                                    markerHoveredLocation={markerHoveredLocation}
                                     googleMapsSearchService={googleMapsSearchService}
+                                    setMarkerHoveredLocation={setMarkerHoveredLocation}
+                                    setSidebarHovered={setSidebarHovered}
                                     {...location}
                                 />
                             </div>

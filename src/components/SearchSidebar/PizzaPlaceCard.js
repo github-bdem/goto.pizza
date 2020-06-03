@@ -1,20 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import './SearchSidebar.scss';
 
 const PizzaPlaceCard = (props) => {
-    const { name, rating, user_ratings_total, googleMapsSearchService, selectedLocation, id, place_id } = props;
+    const {
+        name,
+        rating,
+        user_ratings_total,
+        googleMapsSearchService,
+        selectedLocation,
+        id,
+        place_id,
+        markerHoveredLocation,
+        setMarkerHoveredLocation,
+        setSidebarHovered,
+    } = props;
     const [isExpanded, setIsExpanded] = useState(false);
     const [isLoadingMoreDetails, setIsLoadingMoreDetails] = useState(false);
     const [detailedInformation, setDetailedInformation] = useState({});
+    const [isHovered, setIsHovered] = useState(false);
 
-    useEffect(() => {
-        if (id === selectedLocation && !isExpanded) {
-            requestPlaceDetails();
-        }
-    }, [selectedLocation]);
-
-    const requestPlaceDetails = () => {
+    const requestPlaceDetails = useCallback(() => {
         setIsLoadingMoreDetails(true);
         setIsExpanded(true);
         const request = {
@@ -30,10 +36,38 @@ const PizzaPlaceCard = (props) => {
             }
         };
         googleMapsSearchService.getDetails(request, onResponse);
-    };
+    }, [googleMapsSearchService, place_id]);
+
+    useEffect(() => {
+        if (id === selectedLocation && !isExpanded) {
+            requestPlaceDetails();
+        }
+    }, [id, isExpanded, requestPlaceDetails, selectedLocation]);
+
+    useEffect(() => {
+        if (id === markerHoveredLocation) {
+            setIsHovered(true);
+            const cardElement = document.getElementById(`shop-marker-${id}`);
+            if (cardElement) {
+                cardElement.scrollIntoView({ behavior: 'smooth' });
+            }
+        } else {
+            setIsHovered(false);
+        }
+    }, [markerHoveredLocation, id]);
 
     return (
-        <div className="PizzaPlaceCard">
+        <div
+            id={`shop-marker-${id}`}
+            className={`PizzaPlaceCard ${isHovered ? 'PizzaLocationHovered' : ''}`}
+            onMouseEnter={() => {
+                setIsHovered(true);
+                setSidebarHovered(id);
+            }}
+            onMouseLeave={() => {
+                setIsHovered(false);
+                setSidebarHovered(null);
+            }}>
             <h3>{name}</h3>
             <div>Average Rating: {rating}</div>
             <div>Total Reviews: {user_ratings_total}</div>

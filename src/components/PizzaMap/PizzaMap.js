@@ -11,6 +11,8 @@ const PizzaMap = (props) => {
         setGoogleMapsSearchService,
         setSelectedLocation,
         pizzaLocations,
+        setMarkerHoveredLocation,
+        sidebarHovered,
     } = props;
 
     const [currentRequestCenter, setCurrentRequestCenter] = useState({ lat: 33.8108, lng: -117.923 });
@@ -132,6 +134,8 @@ const PizzaMap = (props) => {
                         <ShopMarker
                             key={location.id}
                             setSelectedLocation={setSelectedLocation}
+                            setMarkerHoveredLocation={setMarkerHoveredLocation}
+                            sidebarHovered={sidebarHovered}
                             lat={location.geometry.location.lat()}
                             lng={location.geometry.location.lng()}
                             text={location.name}
