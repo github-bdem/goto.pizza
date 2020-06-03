@@ -1,20 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import './SearchSidebar.scss';
 
 const PizzaPlaceCard = (props) => {
-    const { name, rating, user_ratings_total, googleMapsSearchService, selectedLocation, id, place_id } = props;
+    const {
+        name,
+        rating,
+        user_ratings_total,
+        googleMapsSearchService,
+        selectedLocation,
+        id,
+        place_id,
+        hoveredLocation,
+        setHoveredLocation,
+        setSidebarHovered,
+    } = props;
     const [isExpanded, setIsExpanded] = useState(false);
     const [isLoadingMoreDetails, setIsLoadingMoreDetails] = useState(false);
     const [detailedInformation, setDetailedInformation] = useState({});
+    const [isHovered, setIsHovered] = useState(false);
 
-    useEffect(() => {
-        if (id === selectedLocation && !isExpanded) {
-            requestPlaceDetails();
-        }
-    }, [selectedLocation]);
-
-    const requestPlaceDetails = () => {
+    const requestPlaceDetails = useCallback(() => {
         setIsLoadingMoreDetails(true);
         setIsExpanded(true);
         const request = {
@@ -30,10 +36,33 @@ const PizzaPlaceCard = (props) => {
             }
         };
         googleMapsSearchService.getDetails(request, onResponse);
-    };
+    }, [googleMapsSearchService, place_id]);
+
+    useEffect(() => {
+        if (id === selectedLocation && !isExpanded) {
+            requestPlaceDetails();
+        }
+    }, [id, isExpanded, requestPlaceDetails, selectedLocation]);
+
+    useEffect(() => {
+        if (id === hoveredLocation) {
+            setIsHovered(true);
+        } else {
+            setIsHovered(false);
+        }
+    }, [hoveredLocation, id]);
 
     return (
-        <div className="PizzaPlaceCard">
+        <div
+            className={`PizzaPlaceCard ${isHovered ? 'PizzaLocationHovered' : ''}`}
+            onMouseEnter={() => {
+                setHoveredLocation(id);
+                setSidebarHovered(id);
+            }}
+            onMouseLeave={() => {
+                setSidebarHovered(null);
+                setHoveredLocation(null);
+            }}>
             <h3>{name}</h3>
             <div>Average Rating: {rating}</div>
             <div>Total Reviews: {user_ratings_total}</div>

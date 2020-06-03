@@ -1,11 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './ShopMarker.scss';
 
 const ShopMarker = (props) => {
-    const { setSelectedLocation, location } = props;
+    const { setSelectedLocation, location, setHoveredLocation, sidebarHovered } = props;
+
+    const { id } = location;
+
+    const [isHovered, setIsHovered] = useState(null);
+
+    useEffect(() => {
+        if (id === sidebarHovered) {
+            setIsHovered(true);
+        } else {
+            setIsHovered(false);
+        }
+    }, [sidebarHovered, id]);
 
     return (
-        <div className="shop-marker" onClick={() => setSelectedLocation(location.id)}>
+        <div
+            className={`shop-marker ${isHovered ? 'wobble-hor-bottom' : ''}`}
+            onClick={() => setSelectedLocation(id)}
+            onMouseEnter={() => setHoveredLocation(id)}
+            onMouseLeave={() => setHoveredLocation(null)}>
             <img src={`${process.env.PUBLIC_URL}/marker.svg`} alt="pizza location" />
         </div>
     );
