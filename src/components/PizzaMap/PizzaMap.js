@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import GoogleMapReact from 'google-map-react';
+import ShopMarker from './ShopMarker';
 
 import './PizzaMap.scss';
 
 const PizzaMap = (props) => {
-    const { setPizzaLocations, googleMapsSearchService, setGoogleMapsSearchService } = props;
+    const {
+        setPizzaLocations,
+        googleMapsSearchService,
+        setGoogleMapsSearchService,
+        setSelectedLocation,
+        pizzaLocations,
+    } = props;
 
     const [currentRequestCenter, setCurrentRequestCenter] = useState({ lat: 33.8108, lng: -117.923 });
     const [initialMapCenter, setInitialMapCenter] = useState({ lat: 33.8108, lng: -117.923 });
@@ -116,12 +123,23 @@ const PizzaMap = (props) => {
                     defaultZoom={15}
                     onChange={handleBoundsChange}
                     yesIWantToUseGoogleMapApiInternals
+                    options={{ clickableIcons: false }}
                     onGoogleApiLoaded={({ map }) => {
                         // eslint-disable-next-line no-undef
                         const service = new google.maps.places.PlacesService(map);
                         fetchNewPizzaLocations({ placesSearchService: service, center: map.center, zoom: map.zoom });
-                    }}
-                />
+                    }}>
+                    {pizzaLocations.map((location) => (
+                        <ShopMarker
+                            key={location.id}
+                            setSelectedLocation={setSelectedLocation}
+                            lat={location.geometry.location.lat}
+                            lng={location.geometry.location.lng}
+                            text={location.name}
+                            location={location}
+                        />
+                    ))}
+                </GoogleMapReact>
             )}
             {initialLoading && <div className="MapLoading">Loading Pizza Map</div>}
         </>
