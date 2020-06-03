@@ -16,6 +16,7 @@
 .PizzaLocationsContainer {
     overflow-y: scroll;
     height: calc(100% - #{$sidebarHeaderHeight});
+    scroll-padding: $normalPaddingAmount;
 }
 
 .SidebarHeader {

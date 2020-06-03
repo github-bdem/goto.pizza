@@ -20,7 +20,7 @@ const SearchSidebar = (props) => {
                 <div className={`PizzaLocationsContainer ${noPizzaLocations ? 'FlexCenter' : ''}`}>
                     {!noPizzaLocations &&
                         pizzaLocations.map((location) => (
-                            <div className="PizzaPlaceCardWrapper" key={location.id}>
+                            <div className="PizzaPlaceCardWrapper" key={location.id} id={`shop-marker-${location.id}`}>
                                 <PizzaPlaceCard
                                     selectedLocation={selectedLocation}
                                     markerHoveredLocation={markerHoveredLocation}
