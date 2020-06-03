@@ -6,7 +6,7 @@ import './App.scss';
 const App = () => {
     const [pizzaLocations, setPizzaLocations] = useState([]);
     const [selectedLocation, setSelectedLocation] = useState(null);
-    const [hoveredLocation, setHoveredLocation] = useState(null);
+    const [markerHoveredLocation, setMarkerHoveredLocation] = useState(null);
     const [sidebarHovered, setSidebarHovered] = useState(null);
     const [googleMapsSearchService, setGoogleMapsSearchService] = useState(null);
 
@@ -17,8 +17,8 @@ const App = () => {
                     pizzaLocations={pizzaLocations}
                     selectedLocation={selectedLocation}
                     googleMapsSearchService={googleMapsSearchService}
-                    hoveredLocation={hoveredLocation}
-                    setHoveredLocation={setHoveredLocation}
+                    markerHoveredLocation={markerHoveredLocation}
+                    setMarkerHoveredLocation={setMarkerHoveredLocation}
                     setSidebarHovered={setSidebarHovered}
                 />
                 <PizzaMap
@@ -28,7 +28,7 @@ const App = () => {
                     googleMapsSearchService={googleMapsSearchService}
                     setGoogleMapsSearchService={setGoogleMapsSearchService}
                     sidebarHovered={sidebarHovered}
-                    setHoveredLocation={setHoveredLocation}
+                    setMarkerHoveredLocation={setMarkerHoveredLocation}
                 />
             </div>
         </div>

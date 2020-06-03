@@ -11,7 +11,7 @@ const PizzaMap = (props) => {
         setGoogleMapsSearchService,
         setSelectedLocation,
         pizzaLocations,
-        setHoveredLocation,
+        setMarkerHoveredLocation,
         sidebarHovered,
     } = props;
 
@@ -134,7 +134,7 @@ const PizzaMap = (props) => {
                         <ShopMarker
                             key={location.id}
                             setSelectedLocation={setSelectedLocation}
-                            setHoveredLocation={setHoveredLocation}
+                            setMarkerHoveredLocation={setMarkerHoveredLocation}
                             sidebarHovered={sidebarHovered}
                             lat={location.geometry.location.lat()}
                             lng={location.geometry.location.lng()}

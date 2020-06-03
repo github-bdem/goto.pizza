@@ -11,8 +11,8 @@ const PizzaPlaceCard = (props) => {
         selectedLocation,
         id,
         place_id,
-        hoveredLocation,
-        setHoveredLocation,
+        markerHoveredLocation,
+        setMarkerHoveredLocation,
         setSidebarHovered,
     } = props;
     const [isExpanded, setIsExpanded] = useState(false);
@@ -45,23 +45,28 @@ const PizzaPlaceCard = (props) => {
     }, [id, isExpanded, requestPlaceDetails, selectedLocation]);
 
     useEffect(() => {
-        if (id === hoveredLocation) {
+        if (id === markerHoveredLocation) {
             setIsHovered(true);
+            const cardElement = document.getElementById(`shop-marker-${id}`);
+            if (cardElement) {
+                cardElement.scrollIntoView({ behavior: 'smooth' });
+            }
         } else {
             setIsHovered(false);
         }
-    }, [hoveredLocation, id]);
+    }, [markerHoveredLocation, id]);
 
     return (
         <div
+            id={`shop-marker-${id}`}
             className={`PizzaPlaceCard ${isHovered ? 'PizzaLocationHovered' : ''}`}
             onMouseEnter={() => {
-                setHoveredLocation(id);
+                setIsHovered(true);
                 setSidebarHovered(id);
             }}
             onMouseLeave={() => {
+                setIsHovered(false);
                 setSidebarHovered(null);
-                setHoveredLocation(null);
             }}>
             <h3>{name}</h3>
             <div>Average Rating: {rating}</div>

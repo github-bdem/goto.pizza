@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './ShopMarker.scss';
 
 const ShopMarker = (props) => {
-    const { setSelectedLocation, location, setHoveredLocation, sidebarHovered } = props;
+    const { setSelectedLocation, location, setMarkerHoveredLocation, sidebarHovered } = props;
 
     const { id } = location;
 
@@ -20,8 +20,8 @@ const ShopMarker = (props) => {
         <div
             className={`shop-marker ${isHovered ? 'wobble-hor-bottom' : ''}`}
             onClick={() => setSelectedLocation(id)}
-            onMouseEnter={() => setHoveredLocation(id)}
-            onMouseLeave={() => setHoveredLocation(null)}>
+            onMouseEnter={() => setMarkerHoveredLocation(id)}
+            onMouseLeave={() => setMarkerHoveredLocation(null)}>
             <img src={`${process.env.PUBLIC_URL}/marker.svg`} alt="pizza location" />
         </div>
     );

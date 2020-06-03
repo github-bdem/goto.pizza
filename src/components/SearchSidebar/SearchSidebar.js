@@ -8,8 +8,8 @@ const SearchSidebar = (props) => {
         googleMapsSearchService,
         selectedLocation,
         pizzaLocations,
-        hoveredLocation,
-        setHoveredLocation,
+        markerHoveredLocation,
+        setMarkerHoveredLocation,
         setSidebarHovered,
     } = props;
     const noPizzaLocations = pizzaLocations.length === 0;
@@ -23,9 +23,9 @@ const SearchSidebar = (props) => {
                             <div className="PizzaPlaceCardWrapper" key={location.id}>
                                 <PizzaPlaceCard
                                     selectedLocation={selectedLocation}
-                                    hoveredLocation={hoveredLocation}
+                                    markerHoveredLocation={markerHoveredLocation}
                                     googleMapsSearchService={googleMapsSearchService}
-                                    setHoveredLocation={setHoveredLocation}
+                                    setMarkerHoveredLocation={setMarkerHoveredLocation}
                                     setSidebarHovered={setSidebarHovered}
                                     {...location}
                                 />
