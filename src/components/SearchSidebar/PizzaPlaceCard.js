@@ -57,7 +57,6 @@ const PizzaPlaceCard = (props) => {
 
     return (
         <div
-            id={`shop-marker-${id}`}
             className={`PizzaPlaceCard ${isHovered ? 'PizzaLocationHovered' : ''}`}
             onMouseEnter={() => {
                 setIsHovered(true);
