@@ -5,7 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 if (window.location.protocol !== 'https:') {
-    window.location.replace(`https:${window.location.href.substring(window.location.protocol.length)}`);
+    window.location.protocol = 'https:';
 }
 
 ReactDOM.render(
