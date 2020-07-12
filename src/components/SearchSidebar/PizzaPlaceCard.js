@@ -14,6 +14,7 @@ const PizzaPlaceCard = (props) => {
         markerHoveredLocation,
         setSidebarHovered,
     } = props;
+
     const [isExpanded, setIsExpanded] = useState(false);
     const [isLoadingMoreDetails, setIsLoadingMoreDetails] = useState(false);
     const [detailedInformation, setDetailedInformation] = useState({});
