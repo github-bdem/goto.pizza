@@ -25,7 +25,7 @@ const PizzaPlaceCard = (props) => {
         setIsExpanded(true);
         const request = {
             placeId: place_id,
-            fields: ['formatted_phone_number', 'formatted_address', 'url', 'opening_hours'],
+            fields: ['formatted_phone_number', 'formatted_address', 'url', 'opening_hours', 'utc_offset_minutes'],
         };
 
         const onResponse = (place, status) => {
@@ -34,6 +34,7 @@ const PizzaPlaceCard = (props) => {
                 setDetailedInformation(place);
                 setIsLoadingMoreDetails(false);
             }
+
         };
         googleMapsSearchService.getDetails(request, onResponse);
     }, [googleMapsSearchService, place_id]);
@@ -55,7 +56,6 @@ const PizzaPlaceCard = (props) => {
             setIsHovered(false);
         }
     }, [markerHoveredLocation, id]);
-
     return (
         <div
             className={`PizzaPlaceCard ${isHovered ? 'PizzaLocationHovered' : ''}`}
