@@ -4,7 +4,8 @@ import './ShopMarker.scss';
 const ShopMarker = (props) => {
     const { setSelectedLocation, location, setMarkerHoveredLocation, sidebarHovered } = props;
 
-    const { id } = location;
+    const { place_id } = location;
+    const id = place_id
 
     const [isHovered, setIsHovered] = useState(null);
 

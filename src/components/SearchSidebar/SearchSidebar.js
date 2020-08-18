@@ -20,13 +20,15 @@ const SearchSidebar = (props) => {
                 <div className={`PizzaLocationsContainer ${noPizzaLocations ? 'FlexCenter' : ''}`}>
                     {!noPizzaLocations &&
                         pizzaLocations.map((location) => (
-                            <div className="PizzaPlaceCardWrapper" key={location.id} id={`shop-marker-${location.id}`}>
+                            <div className="PizzaPlaceCardWrapper" key={location.place_id} id={`shop-marker-${location.place_id}`}>
+                                {/* {console.log(location)} */}
                                 <PizzaPlaceCard
                                     selectedLocation={selectedLocation}
                                     markerHoveredLocation={markerHoveredLocation}
                                     googleMapsSearchService={googleMapsSearchService}
                                     setMarkerHoveredLocation={setMarkerHoveredLocation}
                                     setSidebarHovered={setSidebarHovered}
+                                    id={location.place_id}
                                     {...location}
                                 />
                             </div>
