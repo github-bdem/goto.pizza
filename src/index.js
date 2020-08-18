@@ -4,7 +4,7 @@ import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-if (window.location.protocol !== 'https:') {
+if (window.location.protocol !== 'https:' && !window.location.href.includes('localhost')) {
     window.location.protocol = 'https:';
 }
 
