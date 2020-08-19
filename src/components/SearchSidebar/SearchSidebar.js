@@ -21,7 +21,6 @@ const SearchSidebar = (props) => {
                     {!noPizzaLocations &&
                         pizzaLocations.map((location) => (
                             <div className="PizzaPlaceCardWrapper" key={location.place_id} id={`shop-marker-${location.place_id}`}>
-                                {/* {console.log(location)} */}
                                 <PizzaPlaceCard
                                     selectedLocation={selectedLocation}
                                     markerHoveredLocation={markerHoveredLocation}
