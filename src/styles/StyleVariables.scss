@@ -1,6 +1,7 @@
 // Geometric Values
-$bigPaddingAmount: 30px;
+$smallPaddingAmount: 5px;
 $normalPaddingAmount: 10px;
+$bigPaddingAmount: 30px;
 $sidebarHeaderHeight: 50px;
 
 // Colors
@@ -8,3 +9,6 @@ $background-grey: #d8d3c6;
 $pizzaOrange: #ff6500;
 $pizzaRed: #702424;
 $pizzaGrey: #f5efdb;
+
+// Breakpoints
+$mobile-breakpoint: 600px;
