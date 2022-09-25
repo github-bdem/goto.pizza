@@ -7,11 +7,11 @@
     z-index: 500;
     padding: $bigPaddingAmount;
     @media (max-width: $mobile-breakpoint) {
-        height: 40%;
-        width: 78%;
+        height: 45%;
+        width: calc(100% - (10px));
         padding: $smallPaddingAmount;
         padding-bottom: 0;
-        bottom: 25px;
+        bottom: 0;
     }
 }
 

@@ -7,3 +7,9 @@
     justify-content: center;
     height: 100%;
 }
+
+.MapComponentChild {
+    @media (max-width: $mobile-breakpoint) {
+        height: 55% !important;
+    }
+}
