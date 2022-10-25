@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
 import './SearchSidebar.scss';
+import './PizzaPlaceCard.scss';
 
 const PizzaPlaceCard = (props) => {
     const {
@@ -13,6 +14,8 @@ const PizzaPlaceCard = (props) => {
         place_id,
         markerHoveredLocation,
         setSidebarHovered,
+        lastClickedId,
+        setLastClickedId
     } = props;
     const [isExpanded, setIsExpanded] = useState(false);
     const [isLoadingMoreDetails, setIsLoadingMoreDetails] = useState(false);
@@ -65,10 +68,24 @@ const PizzaPlaceCard = (props) => {
             onMouseLeave={() => {
                 setIsHovered(false);
                 setSidebarHovered(null);
-            }}>
+            }}
+            // onClick needed for mobile/touch
+            onClick={() => {
+                if (isHovered === false) {
+                    console.log('last clicked id:', `shop-marker-${lastClickedId}`);
+                    if (lastClickedId) {document.querySelector(`#shop-marker-${lastClickedId} div`).classList.remove('PizzaLocationHovered');}
+                    setIsHovered(true);
+                    setSidebarHovered(id);
+                    setLastClickedId(id);
+                } else {
+                    setIsHovered(false);
+                    setSidebarHovered(null);
+                }
+            }}
+            >
             <h3>{name}</h3>
-            <div>Average Rating: {rating}</div>
-            <div>Total Reviews: {user_ratings_total}</div>
+            <div><span className="card-category">Average Rating: </span><span className="card-stat">{rating}</span></div>
+            <div><span className="card-category">Total Reviews: </span><span className="card-stat">{user_ratings_total}</span></div>
             {!isExpanded && (
                 <button className="LoadMoreInfoButton" onClick={requestPlaceDetails}>
                     Load More Info

@@ -19,7 +19,18 @@ const ShopMarker = (props) => {
     return (
         <div
             className={`shop-marker ${isHovered ? 'wobble-hor-bottom' : ''}`}
-            onClick={() => setSelectedLocation(id)}
+            onClick={() => {
+                // on mobile touch, location is auto-scrolled to in location list
+                if (isHovered === false) {
+                    setSelectedLocation(id);
+                    setIsHovered(true);
+                    setMarkerHoveredLocation(id);
+                } else {
+                    setIsHovered(false);
+                    setMarkerHoveredLocation(null);
+                }
+                setSelectedLocation(id);
+            }}
             onMouseEnter={() => setMarkerHoveredLocation(id)}
             onMouseLeave={() => setMarkerHoveredLocation(null)}>
             <img src={`${process.env.PUBLIC_URL}/marker.svg`} alt="pizza location" />

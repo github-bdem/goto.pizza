@@ -38,6 +38,11 @@ const PizzaMap = (props) => {
         navigator.geolocation.getCurrentPosition(successFunction, () => setInitialLoading(false), geolocationOptions);
     }, []);
 
+    const addCssClassToMapComponentChild = () => {
+        //TODO: eventually refactor to not manipulate the DOM
+        document.querySelector('.SearchSidebarContainer').nextSibling.firstChild.className = 'MapComponentChild'
+    }
+
     const convertDegreesToRadians = (deg) => {
         return deg * (Math.PI / 180);
     };
@@ -144,6 +149,7 @@ const PizzaMap = (props) => {
                     ))}
                 </GoogleMapReact>
             )}
+            {!initialLoading && addCssClassToMapComponentChild()}
             {initialLoading && <div className="MapLoading">Loading Pizza Map</div>}
         </>
     );

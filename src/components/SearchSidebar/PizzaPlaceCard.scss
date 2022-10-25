@@ -1,0 +1,32 @@
+@import '../../styles//StyleVariables.scss';
+
+.PizzaPlaceCard {
+    border: 1px solid $background-grey;
+    padding: $normalPaddingAmount;
+
+    h3 {
+        @media (max-width: $mobile-breakpoint) {
+            margin: 0;
+        }
+    }
+
+    @media (max-width: $mobile-breakpoint) {
+        padding:  8px;
+        
+        .card-category {
+            font-weight: 300;
+            color: grey;
+        }
+        .card-stat {
+            font-weight: 500;
+        }
+    }
+}
+
+.PizzaLocationHovered {
+    -webkit-box-shadow: 2px 10px 44px 0px $background-grey;
+    -moz-box-shadow: 2px 10px 44px 0px $background-grey;
+    box-shadow: 2px 10px 44px 0px $background-grey;
+    border: 1px solid $pizzaOrange;
+}
+

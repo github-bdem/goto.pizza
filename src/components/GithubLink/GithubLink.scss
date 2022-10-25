@@ -1,3 +1,5 @@
+@import '../../styles//StyleVariables.scss';
+
 .GithubLink {
     position: fixed;
     z-index: 5;
@@ -6,4 +8,13 @@
     right: 60px;
     bottom: 25px;
     padding: 6px;
+    @media (max-width: $mobile-breakpoint) {
+        height: 20px;
+        padding: 0;
+        bottom: 112px;
+        right: 20px;
+        & img {
+            width: 20px;
+        }
+    }
 }

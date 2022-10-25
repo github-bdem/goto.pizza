@@ -1,3 +1,5 @@
+@import './styles/StyleVariables.scss';
+
 .App {
     text-align: center;
     height: 100%;
@@ -28,4 +30,10 @@
 .UseEntireViewport {
     height: 100%;
     width: 100%;
+}
+
+.gmnoprint * {
+    @media (max-width: $mobile-breakpoint) {
+        color: grey !important;
+    }
 }
