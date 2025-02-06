@@ -1,4 +1,4 @@
-@import '../../styles//StyleVariables.scss';
+@use '../../styles//StyleVariables.scss' as *;
 
 .SearchSidebarContainer {
     position: fixed;
